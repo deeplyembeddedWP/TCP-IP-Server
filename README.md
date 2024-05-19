@@ -53,8 +53,11 @@ enum server_state_t {
   SERVER_FATAL_ERROR
 };
 ```
-1. SERVER_LISTEN_BEGIN: Initializes the variables, sets up a socket and starts listening for incoming connections.
-2. SERVER_POLL_FOR_EVENTS: Polls for events on all the active sockets i.e. listening and any active connections.
-3. SERVER_POLL_INCOMING_CONNECTIONS: Handles incoming connection request events from clients and adds them for poll to monitor for events.
-4. SERVER_PROCESS_CONNECTION_EVENTS: Processes events generated on all active connection such as socket read, socket write or socket errors.
-5. SERVER_FATAL_ERROR: Handles unexpected errors and exits on a failure.  
+1. *SERVER_LISTEN_BEGIN:* Initializes the variables, sets up a socket and starts listening for incoming connections. If no errors, transistion to state(2) else to state(5).
+2. *SERVER_POLL_FOR_EVENTS:* Polls for events on all the active sockets i.e. listening and any active connections. If no errors, transistion to state(3) else to state(5).
+3. *SERVER_POLL_INCOMING_CONNECTIONS:* Handles incoming connection request events from clients and adds them for poll to monitor for events. Check for events on listening socket and if POLLIN, accept the connection and on  success, transisition to state(4). On connection acceptance errors, transisition to state(5).
+4. *SERVER_PROCESS_CONNECTION_EVENTS:* Processes events generated on all active connection such as socket read, socket write or socket errors. If all events are processed without errors, transition to state(2) else to state(5).
+5. *SERVER_FATAL_ERROR:* Handles unexpected errors and exits on a failure.
+
+### State transistion diagram
+TBD

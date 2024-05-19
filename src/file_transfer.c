@@ -183,7 +183,8 @@ int file_transfer(int fd, struct file_transfer_t *file_transfer) {
     // check if we managed to send anything
     if (send_result >= 0) {
       file_transfer->transferred_total += send_result;
-      printf("content: %.*s\r\n", err, (char *)buffer);
+      // enable to see whats being sent out
+      // printf("content: %.*s\r\n", err, (char *)buffer);
     } else {
       err = send_result;
       printf("send error %d\r\n", err);

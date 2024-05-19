@@ -23,7 +23,7 @@ At present, all the source files are within a single directory called **Src** to
 ## Building the project
 1. In the Makefile, update the *SRCDIR* variable to point the path project is located on your local machine.
 ```
-SRCDIR = /home/vinay_divakar/Server/src
+SRCDIR = /home/vinay_divakar/tcp-ip-server/src
 ```
 2. Run **make** from within the project's root i.e.*Server* to build your project. This will generate an executable called *server_app*.
    

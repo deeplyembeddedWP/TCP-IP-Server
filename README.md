@@ -34,7 +34,27 @@ vinay_divakar@vinay-divakar-Linux:~/Server$ ./server_app
 server listening on port 12345 using socket fd 3
 ```
 2. You could use the [client program](https://github.com/deeplyembeddedWP/tcp-ip-client) to test the server OR tools such as telnet.
+3. For debug purposes or visiblity, you can enable/uncomment the below line in *file_transfer.c* within the function *file_transfer()*. This prints what's being sent over the socket.
+```
+// enable to see whats being sent out
+// printf("content: %.*s\r\n", err, (char *)buffer);
+```
 
 ## How it works
-TBD
+To ensure the server supports concurrent and services concurrent connections, there are a few ways to about it. The most common one's are using the [*select()*](https://man7.org/linux/man-pages/man2/select.2.html) or [*poll()*](https://man7.org/linux/man-pages/man2/poll.2.html) functions. For this application, I decided to use *poll()* cosnidering a few advantages it has over *select()* and also simplifies the software design. There also seems to [*epoll*](https://man7.org/linux/man-pages/man7/epoll.7.html) which is believed to offer much better performace, however, for this case, poll should be good enough.
 
+The application has five states(shown below) to manage all the operations and present in the *server_state_machine.h*.
+```
+enum server_state_t {
+  SERVER_LISTEN_BEGIN,
+  SERVER_POLL_FOR_EVENTS,
+  SERVER_POLL_INCOMING_CONNECTIONS,
+  SERVER_PROCESS_CONNECTION_EVENTS,
+  SERVER_FATAL_ERROR
+};
+```
+1. SERVER_LISTEN_BEGIN: Initializes the variables, sets up a socket and starts listening for incoming connections.
+2. SERVER_POLL_FOR_EVENTS: Polls for events on all the active sockets i.e. listening and any active connections.
+3. SERVER_POLL_INCOMING_CONNECTIONS: Handles incoming connection request events from clients and adds them for poll to monitor for events.
+4. SERVER_PROCESS_CONNECTION_EVENTS: Processes events generated on all active connection such as socket read, socket write or socket errors.
+5. SERVER_FATAL_ERROR: Handles unexpected errors and exits on a failure.  

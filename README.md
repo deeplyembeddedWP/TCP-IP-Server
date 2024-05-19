@@ -33,7 +33,7 @@ SRCDIR = /home/vinay_divakar/Server/src
 vinay_divakar@vinay-divakar-Linux:~/Server$ ./server_app 
 server listening on port 12345 using socket fd 3
 ```
-2. You could use the [client program](https://github.com/deeplyembeddedWP/TCP-IP-Client) to test the server OR tools such as telnet.
+2. You could use the [client program](https://github.com/deeplyembeddedWP/tcp-ip-client) to test the server OR tools such as telnet.
 
 ## How it works
 TBD

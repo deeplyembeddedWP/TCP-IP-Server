@@ -41,7 +41,7 @@ server listening on port 12345 using socket fd 3
 ```
 
 ## How it works
-To ensure the server supports concurrent and services concurrent connections, there are a few ways to about it. The most common one's are using the [*select()*](https://man7.org/linux/man-pages/man2/select.2.html) or [*poll()*](https://man7.org/linux/man-pages/man2/poll.2.html) functions. For this application, I decided to use *poll()* cosnidering a few advantages it has over *select()* and also simplifies the software design. There also seems to [*epoll*](https://man7.org/linux/man-pages/man7/epoll.7.html) which is believed to offer much better performace, however, for this case, poll should be good enough.
+To ensure the server supports concurrent and services concurrent connections, there are a few ways to about it. The most common one's are using the [*select()*](https://man7.org/linux/man-pages/man2/select.2.html) or [*poll()*](https://man7.org/linux/man-pages/man2/poll.2.html) functions. For this application, I decided to use *poll()* considering a few advantages it has over *select()* and also simplifies the software design. There also seems to [*epoll*](https://man7.org/linux/man-pages/man7/epoll.7.html) which is believed to offer much better performace, however, for this case, poll should be good enough.
 
 The application has five states(shown below) to manage all the operations and present in the *server_state_machine.h*.
 ```
